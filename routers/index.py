@@ -7,7 +7,5 @@ router = APIRouter(dependencies=[Depends(auth_helper.check_user)])
 
 
 @router.get("/", response_class=HTMLResponse)
-def get_all(request: Request):
-
-    return templates.TemplateResponse('index.html', {"request": request})
-    # return {"db_version": db_conn.get_version()}
+def get_all(request: Request, user=Depends(auth_helper.get_current_user)):
+    return templates.TemplateResponse('index.html', {"request": request, "page": "dashboard", "user": user})

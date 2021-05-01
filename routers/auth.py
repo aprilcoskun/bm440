@@ -21,19 +21,18 @@ def auth_page(request: Request):
 
 @router.post("/")
 def login(user: User, response: Response):
-    print(user)
     if user.username == "Admin":
         if user.password == "password":
             response.headers["Location"] = "/"
-            response.set_cookie(key="username", value=user.username)
+            response.set_cookie(key="tc", value="Admin")
             response.status_code = status.HTTP_200_OK
             return response
         else:
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Wrong Password")
-    employee = db_conn.get_user(username=user.username)
+    employee = db_conn.get_employee(user.username)
     # TODO: validate employee
 
     response.headers["Location"] = "/"
-    response.set_cookie(key="username", value=employee.username)
+    response.set_cookie(key="tc", value=employee.tc)
     response.status_code = status.HTTP_200_OK
     return response
