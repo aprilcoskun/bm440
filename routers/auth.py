@@ -31,8 +31,10 @@ def login(user: User, response: Response):
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Wrong Password")
     employee = db_conn.get_employee(user.username)
     # TODO: validate employee
-
-    response.headers["Location"] = "/"
-    response.set_cookie(key="tc", value=employee.tc)
-    response.status_code = status.HTTP_200_OK
-    return response
+    if pwd_context.verify(user.password, employee.password):
+        response.headers["Location"] = "/"
+        response.set_cookie(key="tc", value=employee.tc)
+        response.status_code = status.HTTP_200_OK
+        return response
+    else:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Wrong Password")

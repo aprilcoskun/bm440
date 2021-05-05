@@ -1,8 +1,20 @@
-{% extends "index.html" %}
+{% extends "layout.html" %}
 {% block content %}
+    <div class="btn-group input-group-sm me-2">
+    <select class="form-select" id="search_input_type">
+      <option value="barcode" selected>Barcode</option>
+      <option value="name">Name</option>
+      <option value="price">Price</option>
+      <option value="stock">Stock</option>
+    </select>
+
+    <input type="text" class="form-control input-sm" id="search_input"
+           value="{% if request.query_params["search"] is defined %}{{ request.query_params["search"] }}{% endif %}">
+    <button type="button" class="btn btn-sm btn-outline-secondary" onclick="search()">Search</button>
+  </div>
   <div class="btn-group me-2">
-    <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-    <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+    <button type="button" class="btn btn-sm btn-outline-secondary" onclick="exportPdf()">Share</button>
+    <button type="button" class="btn btn-sm btn-outline-secondary" onclick="exportCSV()">Export</button>
   </div>
   <div class="table-responsive">
     <table class="table table-striped table-sm">

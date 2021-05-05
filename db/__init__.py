@@ -82,7 +82,6 @@ class DBConnection:
             cur.close()
             return data
 
-
     def get_all_products(self):
         cur = self._conn.cursor()
         cur.execute("select * from products")
