@@ -3,7 +3,7 @@ from utils import auth_helper
 from fastapi.responses import HTMLResponse
 from utils.templates import templates
 
-router = APIRouter(dependencies=[Depends(auth_helper.check_user)])
+router = APIRouter(prefix="/backup", tags=["Backup"], dependencies=[Depends(auth_helper.check_user)])
 
 
 @router.get("/", response_class=HTMLResponse)

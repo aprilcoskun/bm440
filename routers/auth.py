@@ -3,7 +3,7 @@ from fastapi.responses import HTMLResponse
 from passlib.context import CryptContext
 from pydantic import BaseModel
 from utils.templates import templates
-from db import db_conn
+from db import database
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -29,7 +29,7 @@ def login(user: User, response: Response):
             return response
         else:
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Wrong Password")
-    employee = db_conn.get_employee(user.username)
+    employee = database.get_employee(user.username)
     # TODO: validate employee
     if pwd_context.verify(user.password, employee.password):
         response.headers["Location"] = "/"

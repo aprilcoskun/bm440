@@ -7,5 +7,5 @@ router = APIRouter(dependencies=[Depends(auth_helper.check_user)])
 
 
 @router.get("/", response_class=HTMLResponse)
-def get_all(request: Request, user=Depends(auth_helper.get_current_user)):
+def get_dashboard(request: Request, user=Depends(auth_helper.get_current_user)):
     return templates.TemplateResponse('layout.html', {"request": request, "page": "dashboard", "user": user})
